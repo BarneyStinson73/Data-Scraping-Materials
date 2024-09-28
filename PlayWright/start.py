@@ -13,8 +13,9 @@ def run(playwright: Playwright):
         if url is not None:
             p.goto(url)
             try:
-                # Wait for the script tag to be available before extracting its content
+                # Waiting for the script tag to be available before extracting its content
                 p.wait_for_selector("script[type='application/ld+json']", timeout=5000)
+                # as far as I can assume, this is being loaded by the website. I have tried to wait for the script tag to be available, but it just doesn't work. It throws a TimeoutError
                 product_info = p.locator("script[type='application/ld+json']").text_content()
                 print(product_info)  # this will print the product info in json format
             except TimeoutError:
